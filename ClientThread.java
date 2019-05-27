@@ -2,18 +2,16 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
-import javax.swing.JTextArea;
+import java.net.SocketException;
 
-public class ClientThread implements Runnable {
+public class ClientThread implements Runnable, AutoCloseable {
 
 	private Client client;
-	private JTextArea text;
 	private boolean open;
 	private Server server;
 	
-	public ClientThread (Client client, JTextArea text, Server server) {
+	public ClientThread (Client client, Server server) {
 		this.client = client;
-		this.text = text;
 		open = true;
 		this.server = server;
 	}
@@ -38,15 +36,17 @@ public class ClientThread implements Runnable {
 				s = input.readLine();
 				output.println(s);
 				server.globalMessage(s, this, open);
-				text.append(s + "\n");
+			} catch (SocketException se) {
+				System.out.println("Client closed with ID: " + client.getID());
+				close();
 			} catch (Exception e) {
 				e.printStackTrace();
-				finalize();
+				close();
 			}
 		}
 	}
 	
-	protected void finalize() {
+	public void close() {
 		if (open) {
 			try {
 				open = false;

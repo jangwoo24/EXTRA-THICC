@@ -5,8 +5,10 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 
-class GUI extends JFrame
+class GUI extends JFrame implements ActionListener
 {
+    private JTextField textInput;
+    private JTextArea display;
     public GUI()
     {
         //Creates the Frame
@@ -17,8 +19,9 @@ class GUI extends JFrame
         //Creating the panel at bottom and adding components
         JPanel panel = new JPanel(); // the panel is not visible in output
         JLabel label = new JLabel("Enter Message");
-        JTextField textInput = new JTextField(10); // accepts upto 10 characters
+        textInput = new JTextField(10); // accepts upto 10 characters
         JButton send = new JButton("Send");
+        send.addActionListener(new ActionListener(this));
         JButton draw = new JButton("Draw");
 
         panel.add(label); // Components Added using Flow Layout
@@ -28,7 +31,7 @@ class GUI extends JFrame
         panel.add(draw);
 
         // Text Area at the Center
-        JTextArea display = new JTextArea();
+        display = new JTextArea();
         display.setEditable(false);
 
         //Creating the MenuBar and adding components
@@ -37,13 +40,13 @@ class GUI extends JFrame
 
         JMenuItem connect = new JMenuItem(new AbstractAction("Connect") {
             public void actionPerformed(ActionEvent e) {
-                display.append("Connecting...\n");
+                addTextToDisplay("Connecting...");
             }
         });
         connections.add(connect);
         JMenuItem quit = new JMenuItem(new AbstractAction("Quit") {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Quit clicked");
+                addTextToDisplay("Quitting...");
             }
         });
         connections.add(quit);
@@ -57,6 +60,24 @@ class GUI extends JFrame
         content.add(BorderLayout.CENTER, display);
         setVisible(true);
     }
+    public void addTextToDisplay(String text)
+    {
+        display.append(text+"\n");
+    }
+    public void sendIt()
+    {
+        String textToSend = textInput.getText();
+        textInput.setText("");
+        addTextToDisplay(textToSend);
+    }
+    
+    public void actionPerformed(ActionEvent e)
+    {
+        if("Send".equals(e.getActionCommand())) {
+
+        }
+    }
+
     public static void main(String args[])
     {
         GUI instantMessage = new GUI();
