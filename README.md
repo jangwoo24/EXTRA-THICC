@@ -5,8 +5,8 @@
 ### Usage
 To start server...
 ```sh
-$ javac Server.java
-$ java Server
+$ javac ServerThread.java
+$ java ServerThread
 ```
 To open chat room
 ```sh
