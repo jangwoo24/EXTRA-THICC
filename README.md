@@ -7,6 +7,7 @@ To start server...
 ```sh
 $ javac ServerThread.java
 $ java ServerThread
+Listening for clients.
 ```
 To open chat room
 ```sh
