@@ -16,7 +16,7 @@ import java.util.Scanner;
 public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoCloseable
 {
 	private JTextField textInput;
-    private JTextArea display;
+        private JTextArea display;
 
 	private String host;
 	private String name;
@@ -177,13 +177,13 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
     public void actionPerformed(ActionEvent e)
     {
     	String command = e.getActionCommand();
-        if("Send".equals(command)) {
+        if ("Send".equals(command)) {
         	/*
-		if(!connected) {
+		if (!connected) {
         		connected = true;
         		hostname = sendIt();
         		addTextToDisplay("Hostname: " + hostname);
-        	} else if(!hasName) {
+        	} else if (!hasName) {
         		hasName = true;
         		username = sendIt();
         		addTextToDisplay("Username: " + username);
@@ -191,7 +191,7 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 		*/
 
         	sendable = true;
-        } else if("Quit".equals(e.getActionCommand())) {
+        } else if ("Quit".equals(e.getActionCommand())) {
         	println("Quitting...");
         	//add code to disconnect here
         }
@@ -200,7 +200,7 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 	{
 		/*ChatGUI chatBox = new ChatGUI();
 		chatBox.addTextToDisplay("Enter Hostname address");
-		while(!chatBox.getConnected()) {
+		while (!chatBox.getConnected()) {
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {
@@ -232,7 +232,7 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 
 		while(true) {
 			String send = chat.getTextInput();
-			if(chat.sendIt()) {
+			if (chat.sendIt()) {
 				output.println(chat.getName() + ": " + send);
 			}
 		}
