@@ -5,10 +5,13 @@ JC = javac
         $(JC) $(JFLAGS) $*.java
 
 CLASSES = \
-        ChatClient.java \
-        ChatClientThread.java \
-        ChatServer.java \
-        ChatServerThread.java
+        AutoreplaceSmiles.java \
+        ChatGUI.java \
+        Client.java \
+        ClientThread.java \
+        GUI.java \
+        Server.java \
+        ServerThread.java
 
 default: classes
 
