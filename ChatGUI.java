@@ -68,7 +68,8 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 			System.out.println("Failed to close socket");
 			System.exit(-1);
 		}
-	}*/
+	}
+	*/
 
 	@Override
 	public void close()
@@ -177,7 +178,8 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
     {
     	String command = e.getActionCommand();
         if("Send".equals(command)) {
-        	/*if(!connected) {
+        	/*
+		if(!connected) {
         		connected = true;
         		hostname = sendIt();
         		addTextToDisplay("Hostname: " + hostname);
@@ -185,7 +187,8 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
         		hasName = true;
         		username = sendIt();
         		addTextToDisplay("Username: " + username);
-        	}*/
+        	}
+		*/
 
         	sendable = true;
         } else if("Quit".equals(e.getActionCommand())) {
@@ -234,7 +237,8 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 			}
 		}
 
-		/*socket = new Socket(hostname, Server.port);
+		/*
+		socket = new Socket(hostname, Server.port);
 		PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
 		ChatGUI chat = new ChatGUI(hostname, username);
 		Thread t = new Thread(chat);
@@ -248,7 +252,8 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 				break;
 			}
 		}
-		output.println("Broken while loop");*/
+		output.println("Broken while loop");
+		*/
 		//output.flush();
 	}
 }
