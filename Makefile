@@ -5,11 +5,9 @@ JC = javac
         $(JC) $(JFLAGS) $*.java
 
 CLASSES = \
-        AutoreplaceSmiles.java \
         ChatGUI.java \
         Client.java \
         ClientThread.java \
-        GUI.java \
         Server.java \
         ServerThread.java
 
