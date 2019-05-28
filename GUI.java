@@ -5,7 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 
-class GUI extends JFrame implements ActionListener
+class GUI extends JFrame //implements ActionListener
 {
     private JTextField textInput;
     private JTextArea display;
@@ -17,18 +17,18 @@ class GUI extends JFrame implements ActionListener
         setSize(800, 600);
 
         //Creating the panel at bottom and adding components
-        JPanel panel = new JPanel(); // the panel is not visible in output
+        JPanel panel = new JPanel(); //panel isn't visible in output
         JLabel label = new JLabel("Enter Message");
-        textInput = new JTextField(10); // accepts upto 10 characters
+        textInput = new JTextField(10); // accepts up to 10 characters
         JButton send = new JButton("Send");
-        send.addActionListener(new ActionListener(this));
-        JButton draw = new JButton("Draw");
+        //send.addActionListener(new ActionListener(this));
+        //JButton draw = new JButton("Draw"); <-- will get added if Pictionary idea gets implemented
 
         panel.add(label); // Components Added using Flow Layout
         panel.add(label); // Components Added using Flow Layout
         panel.add(textInput);
         panel.add(send);
-        panel.add(draw);
+        //panel.add(draw);
 
         // Text Area at the Center
         display = new JTextArea();
