@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
+import javax.swing.text.StyledEditorKit;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -19,7 +20,8 @@ import java.util.Scanner;
 public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoCloseable
 {
 	private JTextField textInput;
-    private JTextPane display;
+    // private JTextPane display;
+    private EmoteChanger display;
 
 	private String host;
 	private String name;
@@ -118,7 +120,10 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
         panel.add(draw);
 
         // Text Area at the Center
-        display = new JTextPane();
+        // display = new JTextPane();
+        display = new EmoteChanger();
+        display.setEditorKit(new StyledEditorKit());
+        display.initListener();
         display.setEditable(false);
 
         // Scroll bar for display

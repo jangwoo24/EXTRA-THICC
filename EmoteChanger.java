@@ -7,7 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
  
-public class AutoreplaceSmiles extends JTextPane {
+public class EmoteChanger extends JTextPane {
     String[] emoticons = {":)", ":D", ":(", ">:(", "<3"};
     /*static ImageIcon SMILE_IMG = createImage(":)");
     static ImageIcon ANGER_IMG = createImage(">:(");
@@ -18,7 +18,7 @@ public class AutoreplaceSmiles extends JTextPane {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Autoreplace :) with Smiles images example");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        final AutoreplaceSmiles app = new AutoreplaceSmiles();
+        final EmoteChanger app = new EmoteChanger();
         app.setEditorKit(new StyledEditorKit());
         app.initListener();
         JScrollPane scroll = new JScrollPane(app);
@@ -29,14 +29,14 @@ public class AutoreplaceSmiles extends JTextPane {
         frame.setVisible(true);
     }
  
-    public AutoreplaceSmiles() {
+    public EmoteChanger() {
         super();
         for(String emote: emoticons) {
         	emojis.add(createImage(emote));
         }
     }
  
-    private void initListener() {
+    protected void initListener() {
         getDocument().addDocumentListener(new DocumentListener(){
             public void insertUpdate(DocumentEvent event) {
                 final DocumentEvent e=event;
@@ -45,8 +45,8 @@ public class AutoreplaceSmiles extends JTextPane {
                         if (e.getDocument() instanceof StyledDocument) {
                             try {
                                 StyledDocument doc=(StyledDocument)e.getDocument();
-                                int start= Utilities.getRowStart(AutoreplaceSmiles.this,Math.max(0,e.getOffset()-1));
-                                int end=Utilities.getWordStart(AutoreplaceSmiles.this,e.getOffset()+e.getLength());
+                                int start= Utilities.getRowStart(EmoteChanger.this,Math.max(0,e.getOffset()-1));
+                                int end=Utilities.getWordStart(EmoteChanger.this,e.getOffset()+e.getLength());
                                 String text=doc.getText(start, end-start);
 
                                 for(int index = 0; index < emoticons.length; index++) {
