@@ -1,5 +1,7 @@
 import javax.swing.*;
 import javax.swing.event.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -13,10 +15,11 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
+
 public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoCloseable
 {
 	private JTextField textInput;
-        private JTextArea display;
+    private JTextPane display;
 
 	private String host;
 	private String name;
@@ -115,7 +118,7 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
         panel.add(draw);
 
         // Text Area at the Center
-        display = new JTextArea();
+        display = new JTextPane();
         display.setEditable(false);
 
         // Scroll bar for display
@@ -150,7 +153,13 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 	}
     public void println(String text)
     {
-        display.append(text+"\n");
+        // display.append(text+"\n");
+        try {
+			Document doc = display.getDocument();
+			doc.insertString(doc.getLength(), text + "\n", null);
+		} catch(BadLocationException exc) {
+			exc.printStackTrace();
+		}
     }
 
     public boolean sendIt()
