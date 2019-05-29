@@ -6,7 +6,10 @@ import java.awt.image.BufferedImage;
 import java.awt.*;
  
 public class AutoreplaceSmiles extends JEditorPane {
-    static ImageIcon SMILE_IMG=createImage();
+    String[] emoticons = {":)", ":("};
+    static ImageIcon SMILE_IMG = createImage(":)");
+    static ImageIcon FROWN_IMG = createImage(":(");
+    static ImageIcon[] emojis = {SMILE_IMG, FROWN_IMG};
  
     public static void main(String[] args) {
         JFrame frame = new JFrame("Autoreplace :) with Smiles images example");
@@ -38,18 +41,20 @@ public class AutoreplaceSmiles extends JEditorPane {
                                 int start= Utilities.getRowStart(AutoreplaceSmiles.this,Math.max(0,e.getOffset()-1));
                                 int end=Utilities.getWordStart(AutoreplaceSmiles.this,e.getOffset()+e.getLength());
                                 String text=doc.getText(start, end-start);
- 
-                                int i=text.indexOf(":)");
-                                while(i>=0) {
-                                    final SimpleAttributeSet attrs=new SimpleAttributeSet(
-                                       doc.getCharacterElement(start+i).getAttributes());
-                                    if (StyleConstants.getIcon(attrs)==null) {
-                                        StyleConstants.setIcon(attrs, SMILE_IMG);
-                                        doc.remove(start+i, 2);
-                                        doc.insertString(start+i,":)", attrs);
-                                    }
-                                    i=text.indexOf(":)", i+2);
-                                }
+
+                                for(int index = 0; index < emoticons.length; index++) {
+	                                int i=text.indexOf(emoticons[index]);
+	                                while(i>=0) {
+	                                    final SimpleAttributeSet attrs=new SimpleAttributeSet(
+	                                       doc.getCharacterElement(start+i).getAttributes());
+	                                    if (StyleConstants.getIcon(attrs)==null) {
+	                                        StyleConstants.setIcon(attrs, emojis[index]);
+	                                        doc.remove(start+i, 2);
+	                                        doc.insertString(start+i,":)", attrs);
+	                                    }
+	                                    i=text.indexOf(":)", i+2);
+	                                }
+	                            }
                             } catch (BadLocationException e1) {
                                 e1.printStackTrace();
                             }
@@ -64,24 +69,43 @@ public class AutoreplaceSmiles extends JEditorPane {
         });
     }
  
-    static ImageIcon createImage() {
+    static ImageIcon createImage(String icon) {
         BufferedImage res=new BufferedImage(17, 17, BufferedImage.TYPE_INT_ARGB);
         Graphics g=res.getGraphics();
         ((Graphics2D)g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g.setColor(Color.yellow);
-        g.fillOval(0,0,16,16);
- 
-        g.setColor(Color.black);
-        g.drawOval(0,0,16,16);
- 
-        g.drawLine(4,5, 6,5);
-        g.drawLine(4,6, 6,6);
- 
-        g.drawLine(11,5, 9,5);
-        g.drawLine(11,6, 9,6);
- 
-        g.drawLine(4,10, 8,12);
-        g.drawLine(8,12, 12,10);
+        if(":)".equals(icon)) {
+        	g.setColor(Color.yellow);
+	        g.fillOval(0,0,16,16);
+	 
+	        g.setColor(Color.black);
+	        g.drawOval(0,0,16,16);
+	 
+	        g.drawLine(4,5, 6,5);
+	        g.drawLine(4,6, 6,6);
+	 
+	        g.drawLine(12,5, 10,5);
+	        g.drawLine(12,6, 10,6);
+	 
+	        // g.drawLine(4,10, 8,12);
+	        // g.drawLine(8,12, 12,10);
+	        g.drawArc(3,3,11,10,225,90);
+	    } else if(":(".equals(icon)) {//simple frown
+	    	g.setColor(Color.yellow);
+	        g.fillOval(0,0,16,16);
+	 
+	        g.setColor(Color.black);
+	        g.drawOval(0,0,16,16);
+	 
+	        g.drawLine(4,5, 6,5);//left eye
+	        g.drawLine(4,6, 6,6);
+	 
+	        g.drawLine(12,5, 10,5);//right eye
+	        g.drawLine(12,6, 10,6);
+	 
+	        // g.drawLine(4,12, 8,10);//mouth
+	        // g.drawLine(8,10, 12,12);
+	        g.drawArc(3,11,11,10,45,90);
+	    }
         g.dispose();
  
         return new ImageIcon(res);
