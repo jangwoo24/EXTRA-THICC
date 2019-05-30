@@ -1,5 +1,8 @@
 import javax.swing.*;
 import javax.swing.event.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.StyledEditorKit;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -13,10 +16,12 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
+
 public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoCloseable
 {
 	private JTextField textInput;
-    private JTextArea display;
+    // private JTextPane display;
+    private EmoteChanger display;
 
 	private String host;
 	private String name;
@@ -68,7 +73,8 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 			System.out.println("Failed to close socket");
 			System.exit(-1);
 		}
-	}*/
+	}
+	*/
 
 	@Override
 	public void close()
@@ -114,7 +120,10 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
         panel.add(draw);
 
         // Text Area at the Center
-        display = new JTextArea();
+        // display = new JTextPane();
+        display = new EmoteChanger();
+        display.setEditorKit(new StyledEditorKit());
+        display.initListener();
         display.setEditable(false);
 
         // Scroll bar for display
@@ -149,7 +158,13 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 	}
     public void println(String text)
     {
-        display.append(text+"\n");
+        // display.append(text+"\n");
+        try {
+			Document doc = display.getDocument();
+			doc.insertString(doc.getLength(), text + "\n", null);
+		} catch(BadLocationException exc) {
+			exc.printStackTrace();
+		}
     }
 
     public boolean sendIt()
@@ -176,19 +191,21 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
     public void actionPerformed(ActionEvent e)
     {
     	String command = e.getActionCommand();
-        if("Send".equals(command)) {
-        	/*if(!connected) {
+        if ("Send".equals(command)) {
+        	/*
+		if (!connected) {
         		connected = true;
         		hostname = sendIt();
         		addTextToDisplay("Hostname: " + hostname);
-        	} else if(!hasName) {
+        	} else if (!hasName) {
         		hasName = true;
         		username = sendIt();
         		addTextToDisplay("Username: " + username);
-        	}*/
+        	}
+		*/
 
         	sendable = true;
-        } else if("Quit".equals(e.getActionCommand())) {
+        } else if ("Quit".equals(e.getActionCommand())) {
         	println("Quitting...");
         	//add code to disconnect here
         }
@@ -197,7 +214,7 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 	{
 		/*ChatGUI chatBox = new ChatGUI();
 		chatBox.addTextToDisplay("Enter Hostname address");
-		while(!chatBox.getConnected()) {
+		while (!chatBox.getConnected()) {
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {
@@ -229,12 +246,13 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 
 		while(true) {
 			String send = chat.getTextInput();
-			if(chat.sendIt()) {
+			if (chat.sendIt()) {
 				output.println(chat.getName() + ": " + send);
 			}
 		}
 
-		/*socket = new Socket(hostname, Server.port);
+		/*
+		socket = new Socket(hostname, Server.port);
 		PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
 		ChatGUI chat = new ChatGUI(hostname, username);
 		Thread t = new Thread(chat);
@@ -248,7 +266,8 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 				break;
 			}
 		}
-		output.println("Broken while loop");*/
+		output.println("Broken while loop");
+		*/
 		//output.flush();
 	}
 }

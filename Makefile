@@ -2,17 +2,18 @@ JFLAGS = -g
 JC = javac
 .SUFFIXES: .java .class
 .java.class:
-        $(JC) $(JFLAGS) $*.java
+	$(JC) $(JFLAGS) $*.java
 
 CLASSES = \
-        ChatClient.java \
-        ChatClientThread.java \
-        ChatServer.java \
-        ChatServerThread.java
+	ChatGUI.java \
+	Client.java \
+	ClientThread.java \
+	Server.java \
+	ServerThread.java
 
 default: classes
 
 classes: $(CLASSES:.java=.class)
 
 clean:
-        $(RM) *.class
+	$(RM) *.class
