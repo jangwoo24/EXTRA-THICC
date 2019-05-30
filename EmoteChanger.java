@@ -1,3 +1,4 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -6,16 +7,19 @@ import java.awt.image.BufferedImage;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.File;
+import java.io.IOException;
  
 public class EmoteChanger extends JTextPane {
-    String[] emoticons = {":)", ":D", ":(", ">:(", "<3"};
+    String[] emoticons = {":)", ":D", ":(", ">:(", "<3", "-_-", ":P", ":think:", ":thonk:"};
     /*static ImageIcon SMILE_IMG = createImage(":)");
     static ImageIcon ANGER_IMG = createImage(">:(");
     static ImageIcon FROWN_IMG = createImage(":(");
     static ImageIcon[] emojis = {SMILE_IMG, ANGER_IMG, FROWN_IMG};*/
     static List<ImageIcon> emojis = new ArrayList<>();
  
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException
+    {
         JFrame frame = new JFrame("Autoreplace :) with Smiles images example");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         final EmoteChanger app = new EmoteChanger();
@@ -29,7 +33,8 @@ public class EmoteChanger extends JTextPane {
         frame.setVisible(true);
     }
  
-    public EmoteChanger() {
+    public EmoteChanger() throws IOException
+    {
         super();
         for(String emote: emoticons) {
         	emojis.add(createImage(emote));
@@ -75,8 +80,46 @@ public class EmoteChanger extends JTextPane {
             }
         });
     }
- 
-    static ImageIcon createImage(String icon) {
+ 	static ImageIcon createImage(String icon) throws IOException
+ 	{
+ 		File imageFile = null;
+ 		if(":)".equals(icon)) {
+ 			imageFile = new File("Emojis/grinning.png");
+ 		} else if(":D".equals(icon)) {
+ 			imageFile = new File("Emojis/smile.png");
+ 		} else if(":(".equals(icon)) {
+ 			imageFile = new File("Emojis/frown.png");
+ 		} else if(">:(".equals(icon)) {
+ 			imageFile = new File("Emojis/rage.png");
+ 		} else if("<3".equals(icon)) {
+ 			imageFile = new File("Emojis/heart.png");
+ 		} else if("-_-".equals(icon)) {
+ 			imageFile = new File("Emojis/expressionless.png");
+ 		} else if(":P".equals(icon)) {
+ 			imageFile = new File("Emojis/stuck_out_tongue.png");
+ 		} else if(":think:".equals(icon)) {
+ 			imageFile = new File("Emojis/think.png");
+ 		} else if(":thonk:".equals(icon)) {
+ 			imageFile = new File("Emojis/thonk.png");
+ 		} else {
+ 			imageFile = new File("VideoScreencap.png");
+ 		}
+ 		return openFileAsImage(imageFile);
+ 	}
+ 	static ImageIcon openFileAsImage(File file) throws IOException
+ 	{
+ 		BufferedImage in = ImageIO.read(file);
+
+ 		BufferedImage newImage = new BufferedImage(
+ 		    in.getWidth(), in.getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+ 		Graphics2D g = newImage.createGraphics();
+ 		g.drawImage(in, 0, 0, null);
+ 		g.dispose();
+ 		return new ImageIcon(newImage);
+ 	}
+
+    /*static ImageIcon createImage(String icon) {
         BufferedImage res=new BufferedImage(17, 17, BufferedImage.TYPE_INT_ARGB);
         Graphics g=res.getGraphics();
         ((Graphics2D)g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -191,9 +234,18 @@ public class EmoteChanger extends JTextPane {
 	    	g.drawLine(8,14, 8,14);
 	    	g.drawLine(9,4, 13,4);
 	    	g.drawLine(10,3, 12,3);
+	    } else if("-_-".equals(icon)) {//asian squint
+	    	try {
+		    	BufferedImage in = ImageIO.read(new File("expressionless.png"));
+		    	BufferedImage newImage = new BufferedImage(in.getWidth(), in.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		    	g = newImage.createGraphics();
+		    	g.drawImage(in, 0, 0, null);
+	    	} catch(IOException ioe) {
+
+	    	}
 	    }
         g.dispose();
  
         return new ImageIcon(res);
-    }
+    }*/
 }
