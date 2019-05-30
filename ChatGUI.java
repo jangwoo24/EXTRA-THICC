@@ -89,13 +89,13 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 		}
 	}
 
-	public ChatGUI(String host, String name)
+	public ChatGUI(String host, String name) throws IOException
 	{
 		this();
 		this.host = host;
 		this.name = name;
 	}
-	public ChatGUI()
+	public ChatGUI() throws IOException
 	{//Creates the Frame
         super("Chat Frame");
 
