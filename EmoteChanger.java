@@ -11,7 +11,10 @@ import java.io.File;
 import java.io.IOException;
  
 public class EmoteChanger extends JTextPane {
-    String[] emoticons = {":)", ":D", ":(", ">:(", "<3", "-_-", ":P", ":think:", ":thonk:", "jeff"};
+    String[] emoticons = {":)", ":D", ":(", ">:(", "<3", "-_-", ":P",
+    	":think:", ":thonk:", ":eggplant:", ":peach:", ":sweat:",
+    	"jeff"
+    	};
     /*static ImageIcon SMILE_IMG = createImage(":)");
     static ImageIcon ANGER_IMG = createImage(">:(");
     static ImageIcon FROWN_IMG = createImage(":(");
@@ -84,9 +87,9 @@ public class EmoteChanger extends JTextPane {
  	{
  		File imageFile = null;
  		if(":)".equals(icon)) {
- 			imageFile = new File("Emojis/grinning.png");
- 		} else if(":D".equals(icon)) {
  			imageFile = new File("Emojis/smile.png");
+ 		} else if(":D".equals(icon)) {
+ 			imageFile = new File("Emojis/grinning.png");
  		} else if(":(".equals(icon)) {
  			imageFile = new File("Emojis/frown.png");
  		} else if(">:(".equals(icon)) {
@@ -101,8 +104,14 @@ public class EmoteChanger extends JTextPane {
  			imageFile = new File("Emojis/think.png");
  		} else if(":thonk:".equals(icon)) {
  			imageFile = new File("Emojis/thonk.png");
- 		} else if("jeff".equals(icon)) {
+ 		} else if(":eggplant:".equals(icon)) {
  			imageFile = new File("Emojis/eggplant.png");
+ 		} else if(":peach:".equals(icon)) {
+ 			imageFile = new File("Emojis/peach.png");
+ 		} else if(":sweat:".equals(icon)) {
+ 			imageFile = new File("Emojis/sweat.png");
+ 		} else if("jeff".equals(icon)) {
+ 			imageFile = new File("Emojis/jeff.png");
  		} else {
  			imageFile = new File("VideoScreencap.png");
  		}
@@ -120,134 +129,4 @@ public class EmoteChanger extends JTextPane {
  		g.dispose();
  		return new ImageIcon(newImage);
  	}
-
-    /*static ImageIcon createImage(String icon) {
-        BufferedImage res=new BufferedImage(17, 17, BufferedImage.TYPE_INT_ARGB);
-        Graphics g=res.getGraphics();
-        ((Graphics2D)g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        if(":)".equals(icon)) {
-        	g.setColor(Color.yellow);
-	        g.fillOval(0,0,16,16);
-	 
-	        g.setColor(Color.black);
-	        g.drawOval(0,0,16,16);
-	 
-	        g.drawLine(4,5, 6,5);
-	        g.drawLine(4,6, 6,6);
-	 
-	        g.drawLine(12,5, 10,5);
-	        g.drawLine(12,6, 10,6);
-	 
-	        // g.drawLine(4,10, 8,12);
-	        // g.drawLine(8,12, 12,10);
-	        g.drawArc(3,3,11,10,225,90);
-	    } else if(":D".equals(icon)) {//open smile
-	    	g.setColor(Color.yellow);
-	        g.fillOval(0,0,16,16);
-	 
-	        g.setColor(Color.black);
-	        g.drawOval(0,0,16,16);
-	 
-	        g.drawLine(4,5, 6,5);//left eye
-	        g.drawLine(4,6, 6,6);
-	 
-	        g.drawLine(12,5, 10,5);//right eye
-	        g.drawLine(12,6, 10,6);
-
-	        g.fillArc(3,4,11,10,180,180);
-	        //g.drawArc(3,4,11,10,180,180);
-	        //g.drawLine(3,11, 14,11);
-	    } else if(":(".equals(icon)) {//simple frown
-	    	g.setColor(Color.yellow);
-	        g.fillOval(0,0,16,16);
-	 
-	        g.setColor(Color.black);
-	        g.drawOval(0,0,16,16);
-	 
-	        g.drawLine(4,5, 6,5);//left eye
-	        g.drawLine(4,6, 6,6);
-	 
-	        g.drawLine(12,5, 10,5);//right eye
-	        g.drawLine(12,6, 10,6);
-	 
-	        // g.drawLine(4,12, 8,10);//mouth
-	        // g.drawLine(8,10, 12,12);
-	        g.drawArc(3,11,11,10,45,90);
-	    } else if(">:(".equals(icon)) {//angry frown
-	    	g.setColor(Color.red);
-	        g.fillOval(0,0,16,16);
-	 
-	        g.setColor(Color.black);
-	        g.drawOval(0,0,16,16);
-	 
-	        g.drawLine(4,5, 5,5);//left eye
-	        g.drawLine(4,6, 6,6);
-	 
-	        g.drawLine(12,5, 11,5);//right eye
-	        g.drawLine(12,6, 10,6);
-	 
-	        g.drawLine(7,9, 11,9); //mouth
-	        g.drawLine(7,14, 11,14);
-
-	        g.drawLine(5,10, 6,10);
-	        g.drawLine(5,13, 6,13);
-	        g.drawLine(10,10, 11,10);
-	        g.drawLine(10,13, 11,13);
-
-	        g.drawLine(4,11, 4,12);
-	        g.drawLine(12,11, 12,12);
-
-	        g.drawLine(6,11, 6,13);
-	        g.drawLine(8,11, 8,13);
-	        g.drawLine(10,11, 10, 13);
-
-	        g.setColor(Color.white);
-	        g.drawLine(5,11, 5,12);
-	        g.drawLine(7,9, 7,13);
-	        g.drawLine(9,9, 9,13);
-	        g.drawLine(11,11, 11,12);
-	    } else if("<3".equals(icon)) {//heart
-	    	g.setColor(Color.black);
-	    	g.drawLine(8,15, 15,8);
-	    	g.drawLine(15,8, 15,5);
-	    	g.drawLine(15,5, 12,2);
-	    	g.drawLine(12,2, 10,2);
-	    	g.drawLine(10,2, 8,4);
-	    	g.drawLine(8,4, 6,2);
-	    	g.drawLine(6,2, 4,2);
-	    	g.drawLine(4,2, 1,5);
-	    	g.drawLine(1,5, 1,8);
-	    	g.drawLine(1,8, 8,15);
-
-	    	g.setColor(Color.red);
-	    	g.drawLine(2,7, 2,5);
-	    	g.drawLine(2,5, 3,5);
-	    	g.drawLine(4,3, 6,3);
-	    	g.drawLine(3,4, 7,4);
-	    	g.drawLine(5,5, 14,5);
-	    	g.drawLine(4,6, 14,6);
-	    	g.drawLine(4,7, 14,7);
-	    	g.drawLine(2,8, 14,8);
-	    	g.drawLine(3,9, 13,9);
-	    	g.drawLine(4,10, 12,10);
-	    	g.drawLine(5,11, 11,11);
-	    	g.drawLine(6,12, 10,12);
-	    	g.drawLine(7,13, 9,13);
-	    	g.drawLine(8,14, 8,14);
-	    	g.drawLine(9,4, 13,4);
-	    	g.drawLine(10,3, 12,3);
-	    } else if("-_-".equals(icon)) {//asian squint
-	    	try {
-		    	BufferedImage in = ImageIO.read(new File("expressionless.png"));
-		    	BufferedImage newImage = new BufferedImage(in.getWidth(), in.getHeight(), BufferedImage.TYPE_INT_ARGB);
-		    	g = newImage.createGraphics();
-		    	g.drawImage(in, 0, 0, null);
-	    	} catch(IOException ioe) {
-
-	    	}
-	    }
-        g.dispose();
- 
-        return new ImageIcon(res);
-    }*/
 }
