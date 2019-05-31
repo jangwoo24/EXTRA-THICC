@@ -2,55 +2,61 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class Panel extends JPanel
+public class DrawPane extends JFrame
 {
   // PROPERTIES
   private final int DEFAULT_WIDTH  = 400;
   private final int DEFAULT_HEIGHT = 400;
   private final Color BACK_COLOR   = Color.WHITE;
 
-  private int x1, y1, x2, y2;
-
   private MouseHandler handler;
   private Graphics g;
-  public Panel()
+
+  public JPanel panel;
+
+  public DrawPane()
   {
-    setBackground( BACK_COLOR );
-    setPreferredSize( new Dimension( DEFAULT_WIDTH, DEFAULT_HEIGHT ) );
+    super("Draw Pane");
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    //JButton erase = new JButton("Erase");
+
+    panel = new JPanel() {
+      public void paintComponent(Graphics g)
+      {
+        super.paintComponent(g);
+      }
+    };
+
+    panel.setBackground( BACK_COLOR );
+    panel.setPreferredSize( new Dimension( DEFAULT_WIDTH, DEFAULT_HEIGHT ) );
 
     handler  = new MouseHandler();
 
-    this.addMouseListener( handler );
-    this.addMouseMotionListener( handler );
+    panel.addMouseListener( handler );
+    panel.addMouseMotionListener( handler );
+
+    add( panel );
+
+    pack();
+    setVisible( true );
   }
 
   public static void main(String[] args)
   {
-    JFrame frame = new JFrame( "Panel" );
-    frame.setDefaultCloseOperation(3);
-    JButton erase = new JButton("Erase");
-    //frame.add(erase);
-    //erase.addActionListener();
-
-    Panel  panel = new Panel();
-    frame.add( panel );
-
-    frame.pack();
-    frame.setVisible( true );
+    DrawPane dp = new DrawPane();
   }
 
-  public void paintComponent(Graphics g)
-  {
-    super.paintComponent(g);
-  }
+  
 
   private void setUpDrawingGraphics()
   {
-    g = getGraphics();
+    g = panel.getGraphics();
   }
 
   private class MouseHandler extends MouseAdapter
   {
+    private int x1, y1, x2, y2;
     public void mousePressed( MouseEvent e )
     {
       x1 = e.getX();
