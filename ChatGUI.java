@@ -35,9 +35,10 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 	int g = (int)(Math.random()*256);
 	int b = (int)(Math.random()*256);
 
-	Color color = new Color(R, G, B); //random color, but can be bright or dull
+	Color color = new Color(r, g, b); //random color, but can be bright or dull
 	
 	////////////////////////////////////////////////////////////////////////////
+	
 
 	@Override
 	public void run() {
@@ -75,11 +76,13 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 		}
 	}
 
-	public ChatGUI(String host, String name) throws IOException
+	public ChatGUI(String host, String name, Color c) throws IOException
 	{
 		this();
 		this.host = host;
 		this.name = name;
+		
+		
 	}
 	public ChatGUI() throws IOException
 	{//Creates the Frame
