@@ -5,6 +5,7 @@ import javax.swing.text.Document;
 import javax.swing.text.StyledEditorKit;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,7 +36,7 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 	int g = (int)(Math.random()*256);
 	int b = (int)(Math.random()*256);
 
-	Color color = new Color(R, G, B); //random color, but can be bright or dull
+	Color color = new Color(r, g, b); //random color, but can be bright or dull
 	
 	////////////////////////////////////////////////////////////////////////////
 
