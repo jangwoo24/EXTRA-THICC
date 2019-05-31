@@ -17,7 +17,7 @@ public class DrawPane extends JFrame
   public DrawPane()
   {
     super("Draw Pane");
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
     //JButton erase = new JButton("Erase");
 

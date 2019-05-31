@@ -86,9 +86,11 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
         JLabel label = new JLabel("Enter Message");
         textInput = new JTextField(10); // accepts upto 10 characters
         JButton send = new JButton("Send");
-        send.setActionCommand("Send");
+        send.setActionCommand("SEND");
         send.addActionListener(this);
         JButton draw = new JButton("Draw");
+        draw.setActionCommand("DRAW");
+        draw.addActionListener(this);
 
         panel.add(label); // Components Added using Flow Layout
         panel.add(label); // Components Added using Flow Layout
@@ -160,16 +162,20 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
     {
     	return name;
     }
+
+    public void openDrawPane()
+    {
+    	DrawPane dp = new DrawPane();
+    }
     
     @Override
     public void actionPerformed(ActionEvent e)
     {
     	String command = e.getActionCommand();
-        if ("Send".equals(command)) {
+        if ("SEND".equals(command)) {
         	sendable = true;
-        } else if ("Quit".equals(e.getActionCommand())) {
-        	println("Quitting...");
-        	//add code to disconnect here
+        } else if ("DRAW".equals(command)) {
+        	openDrawPane();
         }
     }
 	public static void main(String[] args) throws IOException
