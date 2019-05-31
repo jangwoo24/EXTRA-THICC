@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
+import java.util.Random;
 
 
 public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoCloseable
@@ -28,7 +29,15 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 	private int id;
 
 	private boolean sendable = false;
+	
+	/////////////////////////////////////////////////////////////////////////need help integrating 
+	int r = (int)(Math.random()*256);
+	int g = (int)(Math.random()*256);
+	int b = (int)(Math.random()*256);
 
+	Color color = new Color(R, G, B); //random color, but can be bright or dull
+	
+	////////////////////////////////////////////////////////////////////////////
 
 	@Override
 	public void run() {
@@ -183,6 +192,11 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 		Scanner keyboard = new Scanner(System.in);
 		System.out.println("Enter a hostname Address:");
 		String hostname = keyboard.nextLine();
+		
+		
+		
+		
+		
 		System.out.println("Enter a Username:");
 		String username = keyboard.nextLine();
 
