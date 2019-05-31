@@ -5,9 +5,9 @@ import javax.swing.*;
 public class Panel extends JPanel
 {
   // PROPERTIES
-  private final int DEFAULT_WIDTH  = 800;
-  private final int DEFAULT_HEIGHT = 800;
-  private final Color BACK_COLOR   = Color.BLACK;
+  private final int DEFAULT_WIDTH  = 400;
+  private final int DEFAULT_HEIGHT = 400;
+  private final Color BACK_COLOR   = Color.WHITE;
 
   private int x1, y1, x2, y2;
 
