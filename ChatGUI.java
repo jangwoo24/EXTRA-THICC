@@ -232,6 +232,7 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
         	println("Oh! So your name is " + name);
         } else if ("QUIT".equals(command)) {
         	println("Quitting...");
+        	setColor(Color.blue);
         }
     }
 	public static void main(String[] args) throws IOException
@@ -239,10 +240,6 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 		Scanner keyboard = new Scanner(System.in);
 		System.out.println("Enter a hostname Address:");
 		String hostname = keyboard.nextLine();
-		
-		
-		
-		
 		
 		System.out.println("Enter a Username:");
 		String username = keyboard.nextLine();
