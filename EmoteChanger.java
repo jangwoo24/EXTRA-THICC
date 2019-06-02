@@ -129,4 +129,5 @@ public class EmoteChanger extends JTextPane {
  		g.dispose();
  		return new ImageIcon(newImage);
  	}
+
 }

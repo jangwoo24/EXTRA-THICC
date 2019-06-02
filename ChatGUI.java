@@ -11,6 +11,9 @@ import javax.swing.JTextField;
 
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import javax.swing.text.StyledEditorKit;
 
 import java.awt.BorderLayout;
@@ -39,6 +42,8 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 	private int id;
 
 	private boolean sendable = false;
+
+	private SimpleAttributeSet keyword;
 	
 	private Color color;
 	/////////////////////////////////////////////////////////////////////////need help integrating 
@@ -96,7 +101,7 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 		this();
 		this.host = host;
 		this.name = name;
-		color = c;
+		setColor(c);
 
 	}
 	public ChatGUI() throws IOException
@@ -132,6 +137,8 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
         display.initListener();
         display.setEditable(false);
 
+        keyword = new SimpleAttributeSet();
+        StyleConstants.setForeground(keyword, Color.black);
         // Scroll bar for display
         JScrollPane scroll = new JScrollPane(display);
 
@@ -161,8 +168,8 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
     public void println(String text)
     {
         try {
-			Document doc = display.getDocument();
-			doc.insertString(doc.getLength(), text + "\n", null);
+			StyledDocument doc = display.getStyledDocument();
+			doc.insertString(doc.getLength(), text + "\n", keyword);
 		} catch(BadLocationException exc) {
 			exc.printStackTrace();
 		}
@@ -187,6 +194,25 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
     	return name;
     }
 
+    public String getColorRGB()
+    {
+    	String output = "";
+    	int RGB = getColor().getRGB();
+    	int alpha = (RGB >> 24) & 0xff;
+	    int red = (RGB >> 16) & 0xff;
+	    int green = (RGB >> 8) & 0xff;
+	    int blue = (RGB) & 0xff;
+	    return alpha + " " + red + " " + green + " " + blue;
+    }
+    public Color getColor()
+    {
+    	return color;
+    }
+    public void setColor(Color c)
+    {
+    	color = c;
+    	StyleConstants.setForeground(keyword, color);
+    }
     public void openDrawPane()
     {
     	DrawPane dp = new DrawPane();
@@ -202,6 +228,8 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
         	openDrawPane();
         } else if ("CONNECT".equals(command)) {
         	println("Connecting...");
+        	String name = JOptionPane.showInputDialog(this, "What's your name?");
+        	println("Oh! So your name is " + name);
         } else if ("QUIT".equals(command)) {
         	println("Quitting...");
         }
