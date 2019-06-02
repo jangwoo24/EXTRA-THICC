@@ -205,7 +205,10 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
     {
         try {
 			StyledDocument doc = display.getStyledDocument();
-			doc.insertString(doc.getLength(), text + "\n", keyword);
+	    	// StyleConstants.setForeground(keyword, Color.black);
+	    	int colonIndex = text.indexOf(":") + 1;
+	    	doc.insertString(doc.getLength(), text.substring(0, colonIndex), null);
+			doc.insertString(doc.getLength(), text.substring(colonIndex) + "\n", keyword);
 		} catch(BadLocationException exc) {
 			exc.printStackTrace();
 		}
@@ -270,7 +273,6 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
         	println("Quitting...");
         	setColor(Color.blue);
         } else  { // colors
-        	println("Text color set to: " + command);
         	if("RED".equals(command))
         		setColor(Color.red);
         	else if("GREEN".equals(command))
@@ -279,6 +281,8 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
         		setColor(Color.blue);
         	else if("BLACK".equals(command))
         		setColor(Color.black);
+        	
+        	println("Text color set to: " + command);
         }
     }
 	public static void main(String[] args) throws IOException
