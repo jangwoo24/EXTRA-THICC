@@ -1,5 +1,14 @@
-import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.StyledEditorKit;
@@ -31,12 +40,13 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 
 	private boolean sendable = false;
 	
+	private Color color;
 	/////////////////////////////////////////////////////////////////////////need help integrating 
-	int r = (int)(Math.random()*256);
+	/*int r = (int)(Math.random()*256);
 	int g = (int)(Math.random()*256);
 	int b = (int)(Math.random()*256);
 
-	Color color = new Color(r, g, b); //random color, but can be bright or dull
+	Color color = new Color(r, g, b);*/ //random color, but can be bright or dull
 	
 	////////////////////////////////////////////////////////////////////////////
 	
@@ -77,13 +87,17 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 		}
 	}
 
+	public ChatGUI(String host, String name) throws IOException
+	{
+		this(host, name, Color.black);
+	}
 	public ChatGUI(String host, String name, Color c) throws IOException
 	{
 		this();
 		this.host = host;
 		this.name = name;
-		
-		
+		color = c;
+
 	}
 	public ChatGUI() throws IOException
 	{//Creates the Frame
@@ -125,17 +139,14 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
         JMenuBar menubar = new JMenuBar();
         JMenu connections = new JMenu("Connections");
 
-        JMenuItem connect = new JMenuItem(new AbstractAction("Connect") {
-            public void actionPerformed(ActionEvent e) {
-                println("Connecting...");
-            }
-        });
+        JMenuItem connect = new JMenuItem("Connect");
+        connect.setActionCommand("CONNECT");
+        connect.addActionListener(this);
         connections.add(connect);
-        JMenuItem quit = new JMenuItem(new AbstractAction("Quit") {
-            public void actionPerformed(ActionEvent e) {
-                println("Quitting...");
-            }
-        });
+
+        JMenuItem quit = new JMenuItem("Quit");
+        quit.setActionCommand("QUIT");
+        quit.addActionListener(this);
         connections.add(quit);
 
         menubar.add(connections);
@@ -189,6 +200,10 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
         	sendable = true;
         } else if ("DRAW".equals(command)) {
         	openDrawPane();
+        } else if ("CONNECT".equals(command)) {
+        	println("Connecting...");
+        } else if ("QUIT".equals(command)) {
+        	println("Quitting...");
         }
     }
 	public static void main(String[] args) throws IOException
