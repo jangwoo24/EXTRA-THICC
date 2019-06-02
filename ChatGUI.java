@@ -144,6 +144,7 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 
         //Creating the MenuBar and adding components
         JMenuBar menubar = new JMenuBar();
+
         JMenu connections = new JMenu("Connections");
 
         JMenuItem connect = new JMenuItem("Connect");
@@ -156,7 +157,42 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
         quit.addActionListener(this);
         connections.add(quit);
 
+        JMenu colorPicker = new JMenu("Colors");
+
+        JMenuItem redColor = new JMenuItem("RED");
+        redColor.setOpaque(true);
+        // redColor.setForeground(Color.red);
+        redColor.setBackground(Color.red);
+        redColor.setActionCommand("RED");
+        redColor.addActionListener(this);
+        colorPicker.add(redColor);
+
+        JMenuItem greenColor = new JMenuItem("GREEN");
+        greenColor.setOpaque(true);
+        // redColor.setForeground(Color.red);
+        greenColor.setBackground(Color.green);
+        greenColor.setActionCommand("GREEN");
+        greenColor.addActionListener(this);
+        colorPicker.add(greenColor);
+
+        JMenuItem blueColor = new JMenuItem("BLUE");
+        blueColor.setOpaque(true);
+        // redColor.setForeground(Color.red);
+        blueColor.setBackground(Color.blue);
+        blueColor.setActionCommand("BLUE");
+        blueColor.addActionListener(this);
+        colorPicker.add(blueColor);
+
+        JMenuItem blackColor = new JMenuItem("BLACK");
+        blackColor.setOpaque(true);
+        // redColor.setForeground(Color.red);
+        blackColor.setBackground(Color.black);
+        blackColor.setActionCommand("BLACK");
+        blackColor.addActionListener(this);
+        colorPicker.add(blackColor);
+
         menubar.add(connections);
+        menubar.add(colorPicker);
 
         //Adding Components to the frame.
         Container content = getContentPane();
@@ -233,6 +269,16 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
         } else if ("QUIT".equals(command)) {
         	println("Quitting...");
         	setColor(Color.blue);
+        } else  { // colors
+        	println("Text color set to: " + command);
+        	if("RED".equals(command))
+        		setColor(Color.red);
+        	else if("GREEN".equals(command))
+        		setColor(Color.green);
+        	else if("BLUE".equals(command))
+        		setColor(Color.blue);
+        	else if("BLACK".equals(command))
+        		setColor(Color.black);
         }
     }
 	public static void main(String[] args) throws IOException
