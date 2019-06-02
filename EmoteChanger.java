@@ -13,7 +13,7 @@ import java.io.IOException;
 public class EmoteChanger extends JTextPane {
     String[] emoticons = {":)", ":D", ":(", ">:(", "<3", "-_-", ":P",
     	":think:", ":thonk:", ":eggplant:", ":peach:", ":sweat:",
-    	"jeff"
+    	"jeff", ":dab:"
     	};
     /*static ImageIcon SMILE_IMG = createImage(":)");
     static ImageIcon ANGER_IMG = createImage(">:(");
@@ -112,7 +112,9 @@ public class EmoteChanger extends JTextPane {
  			imageFile = new File("Emojis/sweat.png");
  		} else if("jeff".equals(icon)) {
  			imageFile = new File("Emojis/jeff.png");
- 		} else {
+ 		} else if(":dab:".equals(icon)) {
+            imageFile = new File("Emojis/dab.png");
+        } else {
  			imageFile = new File("VideoScreencap.png");
  		}
  		return openFileAsImage(imageFile);
