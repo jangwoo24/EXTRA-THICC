@@ -50,16 +50,7 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 
 	private SimpleAttributeSet keyword;
 	
-	private Color color;
-	/////////////////////////////////////////////////////////////////////////need help integrating 
-	/*int r = (int)(Math.random()*256);
-	int g = (int)(Math.random()*256);
-	int b = (int)(Math.random()*256);
-
-	Color color = new Color(r, g, b);*/ //random color, but can be bright or dull
-	
-	////////////////////////////////////////////////////////////////////////////
-	
+	private Color color;	
 
 	@Override
 	public void run() {
