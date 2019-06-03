@@ -318,7 +318,10 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
                     output.println(getName() + ": " + getTextInput());
                     textInput.setText("");
                 } catch(NullPointerException npe) {
-                    println("Silly " + getName() + ", you can't send messages to nobody!");
+                    println(getName() + ": " + getTextInput());
+                    textInput.setText("");
+                    println("Silly " + getName() + 
+                        ", you can't send messages to nobody! Why not make a few friends and connect with them?");
                 }
             }
             // textInput.setText("");
