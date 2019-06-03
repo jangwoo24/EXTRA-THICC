@@ -36,12 +36,17 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 	private JTextField textInput;
     private EmoteChanger display;
 
+    private JMenuItem connect;
+
 	private String host;
 	private String name;
 	private static Socket socket;
 	private int id;
 
-	private boolean sendable = false;
+    private Thread t;
+    private PrintWriter output;
+
+	// private boolean sendable = false;
 
 	private SimpleAttributeSet keyword;
 	
@@ -147,15 +152,15 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 
         JMenu connections = new JMenu("Connections");
 
-        JMenuItem connect = new JMenuItem("Connect");
+        connect = new JMenuItem("Connect");
         connect.setActionCommand("CONNECT");
         connect.addActionListener(this);
         connections.add(connect);
 
-        JMenuItem quit = new JMenuItem("Quit");
+        /*JMenuItem quit = new JMenuItem("Quit");
         quit.setActionCommand("QUIT");
         quit.addActionListener(this);
-        connections.add(quit);
+        connections.add(quit);*/
 
         JMenu colorPicker = new JMenu("Colors");
 
@@ -199,7 +204,10 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
         content.add(BorderLayout.SOUTH, panel);
         content.add(BorderLayout.NORTH, menubar);
         content.add(BorderLayout.CENTER, scroll);
-        setVisible(true);		
+        setVisible(true);
+
+        setName(JOptionPane.showInputDialog(this, "What do your want your username to be?"));
+        println("Your username is " + getName());
 	}
     public void println(String text)
     {
@@ -214,16 +222,15 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 		}
     }
 
-    public boolean sendIt()
+    /*public boolean sendIt()
     {
         String textToSend = getTextInput();
-        if(!("".equals(textToSend)) && sendable) {
+        if(!("".equals(textToSend))) {
     		textInput.setText("");
-	        sendable = false;
 	        return true;
         }
         return false;
-    }
+    }*/
     public String getTextInput()
     {
     	return textInput.getText();
@@ -252,26 +259,96 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
     	color = c;
     	StyleConstants.setForeground(keyword, color);
     }
+
+    public String getHost()
+    {
+        return host;
+    }
+    public void setHost(String hostname)
+    {
+        host = hostname;
+    }
+    public void setName(String username)
+    {
+        name = username;
+    }
     public void openDrawPane()
     {
     	DrawPane dp = new DrawPane();
     }
+
+    /*@Override
+    public void start()
+    {
+
+        while(true) {
+            //String send = getTextInput();
+            if (sendIt()) {
+                // output.println(getName() + ": " + send);
+                output.println(getName() + ": " + getTextInput());
+            }
+        }
+    }*/
     
+    public void connect(String hostname, String username) throws IOException
+    {
+        socket = new Socket(hostname, Server.port);
+        output = new PrintWriter(socket.getOutputStream(), true);
+
+        // ChatGUI chat = new ChatGUI(getHost(), getName());
+        t = new Thread(this);
+        t.start();
+
+
+
+        /*Thread outputThread = new Thread(new Runnable() {
+            public void run() {
+                while(true) {
+                    String send = getTextInput();
+                    if (sendIt()) {
+                        output.println(username + ": " + send);
+                    }
+                }
+            }
+        });
+        inputThread.start();*/
+        
+    }
     @Override
     public void actionPerformed(ActionEvent e)
     {
     	String command = e.getActionCommand();
         if ("SEND".equals(command)) {
-        	sendable = true;
+        	/*sendable = true;
+            sendIt()*/
+            // System.out.println("Sending...");
+            if(!("".equals(getTextInput()))) {
+                try {
+                    output.println(getName() + ": " + getTextInput());
+                    textInput.setText("");
+                } catch(NullPointerException npe) {
+                    println("Silly " + getName() + ", you can't send messages to nobody!");
+                }
+            }
+            // textInput.setText("");
         } else if ("DRAW".equals(command)) {
         	openDrawPane();
         } else if ("CONNECT".equals(command)) {
-        	println("Connecting...");
-        	String name = JOptionPane.showInputDialog(this, "What's your name?");
-        	println("Oh! So your name is " + name);
+        	// println("Connecting...");
+        	setHost(JOptionPane.showInputDialog(this, "Where do you want to connect?"));
+            
+            // println("host is " + getHost());
+            try {
+                connect(getHost(), getName());
+                connect.setText("Quit");
+                connect.setActionCommand("QUIT");
+            } catch (IOException ioe) {
+                println("Failed to connect to " + getHost());
+            }
         } else if ("QUIT".equals(command)) {
         	println("Quitting...");
         	setColor(Color.blue);
+            System.exit(0);
         } else  { // colors
         	if("RED".equals(command))
         		setColor(Color.red);
@@ -287,7 +364,8 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
     }
 	public static void main(String[] args) throws IOException
 	{
-		Scanner keyboard = new Scanner(System.in);
+        ChatGUI chat = new ChatGUI();
+		/*Scanner keyboard = new Scanner(System.in);
 		System.out.println("Enter a hostname Address:");
 		String hostname = keyboard.nextLine();
 		
@@ -313,6 +391,6 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 			if (chat.sendIt()) {
 				output.println(chat.getName() + ": " + send);
 			}
-		}
+		}*/
 	}
 }
