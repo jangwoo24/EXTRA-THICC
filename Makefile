@@ -8,8 +8,9 @@ CLASSES = \
 	ChatGUI.java \
 	Client.java \
 	ClientThread.java \
-	Server.java \
-	ServerThread.java
+	DrawPane.java \
+	EmoteChanger.java \
+	Server.java
 
 default: classes
 
