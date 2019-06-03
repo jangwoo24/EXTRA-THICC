@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Server /*implements Runnable*/ {
+public class Server implements Runnable {
 
 	public static final int port = 4321;
 	private ServerSocket server;
@@ -15,7 +15,11 @@ public class Server /*implements Runnable*/ {
 	private InetAddress address;
 	private List<ClientThread> clients;
 	
-	
+	public Server()
+	{
+		Thread thread = new Thread(this);
+		thread.start();
+	}
 	public ServerSocket getServer() {
 		return server;
 	}
@@ -82,7 +86,7 @@ public class Server /*implements Runnable*/ {
 		}
 	}
 	
-	/*@Override
+	@Override
 	public void run()
 	{
 		listen();
@@ -91,7 +95,5 @@ public class Server /*implements Runnable*/ {
 	public static void main(String[] args)
 	{
 		Server server = new Server();
-		Thread thread = new Thread();
-		thread.start();
-	}*/
+	}
 }
