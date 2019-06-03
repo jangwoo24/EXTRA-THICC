@@ -35,7 +35,7 @@ public class Server implements Runnable {
 	public void listen() {
 		clients = new ArrayList<ClientThread>();
 		try {
-			System.out.println("Listening for clients.");
+			System.out.println("Listening...");
 			server = new ServerSocket(port);
 			address = server.getInetAddress();
 		} catch (Exception e) {
