@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
@@ -19,8 +20,11 @@ import javax.swing.text.StyledEditorKit;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -106,7 +110,7 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 
         System.out.println("CHATGUI OBJECT CREATED");
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
 
         //Creating the panel at bottom and adding components
@@ -195,6 +199,14 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
         content.add(BorderLayout.SOUTH, panel);
         content.add(BorderLayout.NORTH, menubar);
         content.add(BorderLayout.CENTER, scroll);
+
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                // dispose();
+                quit();
+            }
+        });
         setVisible(true);
 
         setName(JOptionPane.showInputDialog(this, "What do your want your username to be?"));
@@ -280,7 +292,11 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
             }
         }
     }*/
-    
+    public void quit()
+    {
+        output.println(getName() + " has left the chat");
+        System.exit(0);
+    }
     public void connect(String hostname, String username) throws IOException
     {
         socket = new Socket(hostname, Server.port);
@@ -340,9 +356,7 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
                 println("Failed to connect to " + getHost());
             }
         } else if ("QUIT".equals(command)) {
-        	println("Quitting...");
-        	setColor(Color.blue);
-            System.exit(0);
+        	quit();
         } else  { // colors
         	if("RED".equals(command))
         		setColor(Color.red);
