@@ -411,14 +411,16 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
         } else  { // colors
         	if("RED".equals(command))
         		setColor(Color.red);
+			else if("ORANGE".equals(command))
+        		setColor(Color.orange);
+			else if("YELLOW".equals(command))
+        		setColor(Color.yellow);
         	else if("GREEN".equals(command))
         		setColor(Color.green);
         	else if("BLUE".equals(command))
         		setColor(Color.blue);
         	else if("BLACK".equals(command))
         		setColor(Color.black);
-		else if("YELLOW".equals(command))
-        		setColor(Color.yellow);
         	
         	println("Text color set to: " + command);
         }
