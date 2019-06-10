@@ -44,6 +44,11 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 {
 	private JTextField textInput;
     private EmoteChanger display;
+<<<<<<< HEAD
+=======
+
+    private JMenuItem connect;
+>>>>>>> 63ea585238cd8146b14a77b2df4e590119c013bb
 
     private JMenuItem connect;
     private boolean chatbot_on = false;
@@ -54,9 +59,15 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
 
     private Thread t;
     private PrintWriter output;
+<<<<<<< HEAD
 
 	// private boolean sendable = false;
 
+=======
+
+	// private boolean sendable = false;
+
+>>>>>>> 63ea585238cd8146b14a77b2df4e590119c013bb
 	private SimpleAttributeSet keyword;
 	
 	private Color color;	
@@ -156,11 +167,14 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
         connect.setActionCommand("CONNECT");
         connect.addActionListener(this);
         connections.add(connect);
+<<<<<<< HEAD
        
         JMenu chatbot = new JMenu("Chatbot");
         chatbot.setActionCommand("CHATBOT");
         connect.addActionListener(this);
         connections.add(chatbot);
+=======
+>>>>>>> 63ea585238cd8146b14a77b2df4e590119c013bb
 
         JMenuItem quit = new JMenuItem("Quit");
         quit.setActionCommand("QUIT");
@@ -389,6 +403,7 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
                 } catch(NullPointerException npe) {
                     println(getName() + ": " + getTextInput());
                     textInput.setText("");
+<<<<<<< HEAD
                     if(chatbot_on == false){
                     println("Why not talk to our chatbot?");
                     }
@@ -396,27 +411,59 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
                     String output1 = cb.CommunicateWithBot(getTextInput());
                     println(output1);
                     chatbot_on = true;
+=======
+                    println("Silly " + getName() + 
+                        ", you can't send messages to nobody! Why not make a few friends and connect with them?");
+>>>>>>> 63ea585238cd8146b14a77b2df4e590119c013bb
                 }
             }
             // textInput.setText("");
         } else if ("DRAW".equals(command)) {
         	openDrawPane();
+<<<<<<< HEAD
         } else if ("CHATBOT".equals(command)) {
             chatbot_on = true;
         	
+=======
+        } else if ("CONNECT".equals(command)) {
+        	// println("Connecting...");
+        	setHost(JOptionPane.showInputDialog(this, "Where do you want to connect?"));
+            
+            // println("host is " + getHost());
+            if("ELIZA".equals(getHost().toUpperCase())) {
+                connectEliza(getName());
+            } else {
+                try {
+                    connect(getHost(), getName());
+                    connect.setVisible(false);
+                } catch (IOException ioe) {
+                    println("Failed to connect to " + getHost());
+                }
+            }
+>>>>>>> 63ea585238cd8146b14a77b2df4e590119c013bb
         } else if ("QUIT".equals(command)) {
         	quit();
         } else  { // colors
         	if("RED".equals(command))
         		setColor(Color.red);
+<<<<<<< HEAD
+=======
+			else if("ORANGE".equals(command))
+        		setColor(Color.orange);
+			else if("YELLOW".equals(command))
+        		setColor(Color.yellow);
+>>>>>>> 63ea585238cd8146b14a77b2df4e590119c013bb
         	else if("GREEN".equals(command))
         		setColor(Color.green);
         	else if("BLUE".equals(command))
         		setColor(Color.blue);
         	else if("BLACK".equals(command))
         		setColor(Color.black);
+<<<<<<< HEAD
 		else if("YELLOW".equals(command))
         		setColor(Color.yellow);
+=======
+>>>>>>> 63ea585238cd8146b14a77b2df4e590119c013bb
         	
         	println("Text color set to: " + command);
         }
