@@ -12,8 +12,8 @@ import java.io.IOException;
  
 public class EmoteChanger extends JTextPane {
     String[] emoticons = {":)", ":D", ":(", ">:(", "<3", "-_-", 
-        ":P", ":think:", ":thonk:", ":eggplant:", ":peach:", 
-        ":sweat:", "jeff", ":dab:"
+        ":P", ":think:", ":thonk:", ":eggplant:", ":dab:", "B)",
+        "XD", ":poo:"
     	};
     /*static ImageIcon SMILE_IMG = createImage(":)");
     static ImageIcon ANGER_IMG = createImage(">:(");
@@ -106,14 +106,14 @@ public class EmoteChanger extends JTextPane {
  			imageFile = new File("Emojis/thonk.png");
  		} else if(":eggplant:".equals(icon)) {
  			imageFile = new File("Emojis/eggplant.png");
- 		} else if(":peach:".equals(icon)) {
- 			imageFile = new File("Emojis/peach.png");
- 		} else if(":sweat:".equals(icon)) {
- 			imageFile = new File("Emojis/sweat.png");
- 		} else if("jeff".equals(icon)) {
- 			imageFile = new File("Emojis/jeff.png");
+ 		} else if("B)".equals(icon)) {
+ 			imageFile = new File("Emojis/sunglasses.png");
+ 		} else if("XD".equals(icon)) {
+ 			imageFile = new File("Emojis/grinning_squint.png");
  		} else if(":dab:".equals(icon)) {
             imageFile = new File("Emojis/dab.png");
+        } else if(":poo:".equals(icon)) {
+            imageFile = new File("Emojis/poo.png");
         } else {
  			imageFile = new File("VideoScreencap.png");
  		}

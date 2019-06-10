@@ -28,6 +28,11 @@ import java.awt.event.WindowEvent;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.InputStream;
+import java.io.FileInputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.FileWriter;
 
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -41,7 +46,7 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
     private EmoteChanger display;
 
     private JMenuItem connect;
-
+    private boolean chatbot_on = false;
 	private String host;
 	private String name;
 	private static Socket socket;
@@ -151,11 +156,16 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
         connect.setActionCommand("CONNECT");
         connect.addActionListener(this);
         connections.add(connect);
+       
+        JMenu chatbot = new JMenu("Chatbot");
+        chatbot.setActionCommand("CHATBOT");
+        connect.addActionListener(this);
+        connections.add(chatbot);
 
-        /*JMenuItem quit = new JMenuItem("Quit");
+        JMenuItem quit = new JMenuItem("Quit");
         quit.setActionCommand("QUIT");
         quit.addActionListener(this);
-        connections.add(quit);*/
+        connections.add(quit);
 
         JMenu colorPicker = new JMenu("Colors");
 
@@ -166,6 +176,22 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
         redColor.setActionCommand("RED");
         redColor.addActionListener(this);
         colorPicker.add(redColor);
+
+        JMenuItem orangeColor = new JMenuItem("ORANGE");
+        orangeColor.setOpaque(true);
+        // redColor.setForeground(Color.red);
+        orangeColor.setBackground(Color.orange);
+        orangeColor.setActionCommand("ORANGE");
+        orangeColor.addActionListener(this);
+        colorPicker.add(orangeColor);
+	
+    	JMenuItem yellowColor = new JMenuItem("YELLOW");
+        yellowColor.setOpaque(true);
+        // yellowColor.setForeground(Color.yellow);
+        yellowColor.setBackground(Color.yellow);
+        yellowColor.setActionCommand("YELLOW");
+        yellowColor.addActionListener(this);
+        colorPicker.add(yellowColor);
 
         JMenuItem greenColor = new JMenuItem("GREEN");
         greenColor.setOpaque(true);
@@ -191,8 +217,14 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
         blackColor.addActionListener(this);
         colorPicker.add(blackColor);
 
+        /*add try/catch to search for old custom colors in a file
+            called color.pick or something*/
+
         menubar.add(connections);
         menubar.add(colorPicker);
+
+        JTextField customColor = new JTextField();
+
 
         //Adding Components to the frame.
         Container content = getContentPane();
@@ -208,9 +240,23 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
             }
         });
         setVisible(true);
-
-        setName(JOptionPane.showInputDialog(this, "What do your want your username to be?"));
+        try {
+            InputStream is = new FileInputStream("user.name");
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String nameInput = br.readLine();
+            setName(nameInput);
+            br.close();
+            is.close();
+        } catch(Exception e) { // nullpointer or IO exception
+            String nameInput = JOptionPane.showInputDialog(this, "What do your want your username to be?");
+            setName(nameInput);
+            FileWriter nameOutput = new FileWriter("user.name");
+            nameOutput.write(nameInput);
+            nameOutput.flush();
+            nameOutput.close();
+        }
         println("Your username is " + getName());
+        println("To change your username, edit the user.name file");
 	}
     public void println(String text)
     {
@@ -294,7 +340,9 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
     }*/
     public void quit()
     {
-        output.println(getName() + " has left the chat");
+    	try {
+	        output.println(getName() + " has left the chat");
+    	} catch(NullPointerException npe) {}
         System.exit(0);
     }
     public void connect(String hostname, String username) throws IOException
@@ -321,6 +369,11 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
         inputThread.start();*/
         
     }
+
+    public void connectEliza(String username)
+    {
+        println("Connecting to Eliza...");
+    }
     @Override
     public void actionPerformed(ActionEvent e)
     {
@@ -336,25 +389,21 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
                 } catch(NullPointerException npe) {
                     println(getName() + ": " + getTextInput());
                     textInput.setText("");
-                    println("Silly " + getName() + 
-                        ", you can't send messages to nobody! Why not make a few friends and connect with them?");
+                    if(chatbot_on == false){
+                    println("Why not talk to our chatbot?");
+                    }
+                    ChatBot cb = new ChatBot();
+                    String output1 = cb.CommunicateWithBot(getTextInput());
+                    println(output1);
+                    chatbot_on = true;
                 }
             }
             // textInput.setText("");
         } else if ("DRAW".equals(command)) {
         	openDrawPane();
-        } else if ("CONNECT".equals(command)) {
-        	// println("Connecting...");
-        	setHost(JOptionPane.showInputDialog(this, "Where do you want to connect?"));
-            
-            // println("host is " + getHost());
-            try {
-                connect(getHost(), getName());
-                connect.setText("Quit");
-                connect.setActionCommand("QUIT");
-            } catch (IOException ioe) {
-                println("Failed to connect to " + getHost());
-            }
+        } else if ("CHATBOT".equals(command)) {
+            chatbot_on = true;
+        	
         } else if ("QUIT".equals(command)) {
         	quit();
         } else  { // colors
@@ -366,6 +415,8 @@ public class ChatGUI extends JFrame implements Runnable, ActionListener, AutoClo
         		setColor(Color.blue);
         	else if("BLACK".equals(command))
         		setColor(Color.black);
+		else if("YELLOW".equals(command))
+        		setColor(Color.yellow);
         	
         	println("Text color set to: " + command);
         }
